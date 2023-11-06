@@ -11,6 +11,18 @@
       imports = [
         inputs.devenv.flakeModule
       ];
+      flake = {
+        nixConfig = {
+          extra-substituters = [
+            "https://nixpkgs-python.cachix.org"
+            "https://cuda-maintainers.cachix.org"
+          ];
+          extra-trusted-public-keys = [
+            "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
+            "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+          ];
+        };
+      };
       systems = [ "x86_64-linux" ];
       perSystem =
         { config
