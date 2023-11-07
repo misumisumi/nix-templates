@@ -4,6 +4,11 @@
   inputs.flake-parts.url = "github:hercules-ci/flake-parts";
   inputs.nixpkgs-python.url = "github:cachix/nixpkgs-python";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.mk-shell-bin.url = "github:rrbutani/nix-mk-shell-bin";
+  inputs.nix2container = {
+    url = "github:nlewo/nix2container";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs = inputs @ { flake-parts, ... }:
 
@@ -41,12 +46,18 @@
             config.allowUnfree = true;
           };
           devenv.shells.default = {
+            containers.default = {
+              name = "python-cuda";
+              startupCommand = "bash";
+              copyToRoot = null;
+            };
             env = {
               XLA_FLAGS = "--xla_gpu_cuda_data_dir=${pkgs.cudaPackages_11_8.cudatoolkit}"; # For tensorflow with GPU support
               # https://github.com/google/REAPER/issues/14#issuecomment-651647572
               LD_PRELOAD = "${pkgs.gperftools}/lib/libtcmalloc.so";
             };
             packages = with pkgs; [
+              pkgs.bashInteractive
               cudaPackages_11_8.cudatoolkit
               cudaPackages_11_8.cudnn_8_9
               ffmpeg
@@ -63,8 +74,11 @@
               python = {
                 enable = true;
                 # poetry.enable = true;
-                # venv.enable = true;
-                version = "3.10";
+                venv = {
+                  enable = true;
+                  requirements = null; # You must set requirements.txt
+                };
+                version = "3.9";
               };
             };
           };
