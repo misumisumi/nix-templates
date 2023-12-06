@@ -81,7 +81,7 @@
               in
               {
                 containers.default = {
-                  name = "audiometrics";
+                  name = "python-poetry";
                   startupCommand = "bash";
                   copyToRoot = null;
                 };

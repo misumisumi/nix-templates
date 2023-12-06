@@ -78,7 +78,7 @@
               in
               {
                 containers.default = {
-                  name = "audiometrics";
+                  name = "python-poetry2nix";
                   startupCommand = "bash";
                   copyToRoot = null;
                 };
