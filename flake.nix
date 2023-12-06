@@ -8,8 +8,12 @@
         description = "python environment with CUDA";
       };
       python-poetry = {
-        path = ./python-poerty;
-        description = "python environment with CUDA";
+        path = ./python-poetry;
+        description = "python environment managed by poetry";
+      };
+      python-poetry2nix = {
+        path = ./python-poetry2nix;
+        description = "python environment managed by poetry2nix";
       };
     };
   };
