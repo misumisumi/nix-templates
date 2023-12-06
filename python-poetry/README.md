@@ -1,4 +1,14 @@
-# nix-python-template
+# python-poetry
+
+## How to use
+
+```
+# 開発環境へ入る
+$ nix develop ".#default"
+
+# direnvを使っているならば
+$ direnv allow
+```
 
 ## 主要パッケージバージョン
 
@@ -8,12 +18,14 @@
 | CUDA    | 11.8 |
 | cuDNN   | 8.9  |
 
-## その他
+## Files
 
-- 外部プロジェクトを管理する場合は、`pyproject.toml`が無い場合は`venv`を使う
-- 新しくプロジェクトを作成する場合は、`poetry`で管理した方が良い
-- 外部プロジェクトはこのプロジェクトにサブモジュールで追加する
-
-## 参考
-
-- [Git submodule の基礎](https://qiita.com/sotarok/items/0d525e568a6088f6f6bb)
+```
+python-poetry
+├── src
+├── tests
+├── flake.lock
+├── flake.nix
+├── pyproject.toml
+└── README.md
+```
