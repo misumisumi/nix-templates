@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "python-poetry"
+version = "0.1.0"
+description = ""
+authors = ["misumisumi <dragon511southern@gmail.com>"]
+readme = "README.md"
+packages = [{include = "python_poetry", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

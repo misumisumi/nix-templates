@@ -4,6 +4,7 @@
 
 - python-cuda: python environment with CUDA
 - python-poetry: python environment managed by poetry
+- python-poetry2nix: python environment managed by poetry2nix
 
 ## Generate container
 
