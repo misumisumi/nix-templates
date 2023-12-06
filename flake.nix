@@ -7,8 +7,10 @@
         path = ./python-cuda;
         description = "python environment with CUDA";
       };
-
+      python-poetry = {
+        path = ./python-cuda;
+        description = "python environment with CUDA";
+      };
     };
-
   };
 }
