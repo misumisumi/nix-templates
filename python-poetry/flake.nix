@@ -1,5 +1,5 @@
 {
-  description = "Playbooks for apps of my k8s cluster";
+  description = "template of python project managed by poetry";
   inputs =
     {
       nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
