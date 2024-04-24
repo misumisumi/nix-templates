@@ -10,25 +10,48 @@
     ];
   };
   inputs = {
-    nix-ml-ops.url = "github:Atry/nix-ml-ops";
+    # nix-ml-ops.url = "github:Atry/nix-ml-ops";
+    nix-ml-ops.url = "github:misumisumi/nix-ml-ops/fix/cuda";
   };
   outputs = inputs @ { nix-ml-ops, ... }:
     nix-ml-ops.lib.mkFlake { inherit inputs; } {
       imports = [
-        inputs.nix-ml-ops.flakeModules.devenvPythonWithLibstdcxx
-        inputs.nix-ml-ops.flakeModules.ldFallbackManylinux
         inputs.nix-ml-ops.flakeModules.cuda
-        inputs.nix-ml-ops.flakeModules.nixpkgs
         inputs.nix-ml-ops.flakeModules.devcontainer
+        inputs.nix-ml-ops.flakeModules.ldFallbackManylinux
+        inputs.nix-ml-ops.flakeModules.nixpkgs
       ];
       perSystem = { pkgs, lib, system, ... }: {
-        ml-ops.common.pythonPackage.base-package = pkgs.python310;
-        ml-ops.devcontainer = {
-          devenvShellModule.languages.python = {
-            enable = true;
-            poetry = {
-              enable = true;
-              activate.enable = false;
+        ml-ops = {
+          common = {
+            cuda = {
+              version = "12.1";
+              packages = cp: with cp; [
+                cuda_nvcc
+                cudatoolkit
+                cuda_cudart
+                libcublas
+                cudnn
+              ];
+            };
+          };
+          devcontainer = {
+            devenvShellModule = {
+              enterShell = ''
+                if [ ! -f pyproject.toml ]; then
+                  poetry new --name="$(basename $PWD | tr [:upper:] [:lower:])" --src ./tmp
+                  mv ./tmp/* .
+                  rm -rf ./tmp
+                fi
+              '';
+              languages.python = {
+                enable = true;
+                package = pkgs.python311;
+                poetry = {
+                  enable = true;
+                  activate.enable = true;
+                };
+              };
             };
           };
         };
